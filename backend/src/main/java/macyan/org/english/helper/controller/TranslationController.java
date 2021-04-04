@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 04.04.2021
  */
 @RestController
-@RequestMapping("translations")
+@RequestMapping("api/v1/translations")
 public class TranslationController {
 
     @GetMapping(value = "/phrases", produces = "application/json")

@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>english-helper-backand</artifactId>
+    <artifactId>english-helper-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>English Helper Backend</name>
     <description>Vocabulary to learn English</description>

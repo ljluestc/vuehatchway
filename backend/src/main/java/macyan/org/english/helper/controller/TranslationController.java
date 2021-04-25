@@ -38,7 +38,10 @@ public class TranslationController {
 
     @GetMapping(path="/secured")
     @ResponseBody
-    public  String getSecured() {
+    /**
+     * Test purpose only, delete in the feature
+     */
+    public String getSecured() {
         log.info("GET successfully called on /secured resource");
         return "Hi from secure controller";
     }

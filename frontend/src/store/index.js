@@ -25,7 +25,6 @@ export default new Vuex.Store({
             api.getSecured(payload.user, payload.password)
                 .then(response => {
                     console.log("Response: '" + response.data + "' with Status code " + response.status);
-                    console.log(response);
                     if (response.status == 200) {
                         return commit('login_success', name);
                     }

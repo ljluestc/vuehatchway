@@ -45,7 +45,7 @@ export default {
   methods: {
     callLogin() {
       this.$store.dispatch('login', {user: this.user, password: this.password})
-          .then(() => this.$router.push('/'))
+          .then(() => this.$router.push({name: 'Home'}))
           .catch(error => {
             this.error.push(error)
           })

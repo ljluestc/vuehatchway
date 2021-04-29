@@ -36,7 +36,7 @@ public class TranslationController {
         return new ArrayList<>();
     }
 
-    @GetMapping(path="/secured")
+    @GetMapping(path = "/secured")
     @ResponseBody
     /**
      * Test purpose only, delete in the feature
@@ -45,4 +45,5 @@ public class TranslationController {
         log.info("GET successfully called on /secured resource");
         return "Hi from secure controller";
     }
+
 }

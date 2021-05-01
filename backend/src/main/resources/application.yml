@@ -6,13 +6,15 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: english_helper
+      database: english-helper
       username: root
       password: example
       authentication-database: admin
 
 # App Properties
+# TODO: Move it to secrets
 english-helper:
   security:
-    jwtSecret: bezKoderSecretKey
-    jwtExpirationMs: 86400000
+    jwtSecret: english-helper-cool-secret
+    jwtExpirationMs: 300 # 5 min
+    jwtRefreshExpirationMs: 604500 # 1 week

@@ -35,7 +35,7 @@ public class JwtUtils {
         this.signingKey = Base64.getEncoder().encode(properties.getSecurity().getJwtSecret().getBytes());
     }
 
-    public String generateJwtToken(Authentication authentication) {
+    public String generateJwtAuthToken(Authentication authentication) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
         Key key = new SecretKeySpec(
             signingKey,
@@ -46,6 +46,21 @@ public class JwtUtils {
             .setSubject((userPrincipal.getUsername()))
             .setIssuedAt(new Date())
             .setExpiration(new Date((new Date()).getTime() + properties.getSecurity().getJwtExpirationMs()))
+            .signWith(key)
+            .compact();
+    }
+
+    public String generateJwtRefreshToken(Authentication authentication) {
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        Key key = new SecretKeySpec(
+            signingKey,
+            SignatureAlgorithm.HS512.getJcaName()
+        );
+
+        return Jwts.builder()
+            .setSubject((userPrincipal.getUsername()))
+            .setIssuedAt(new Date())
+            .setExpiration(new Date((new Date()).getTime() + properties.getSecurity().getJwtRefreshExpirationMs()))
             .signWith(key)
             .compact();
     }

@@ -24,6 +24,8 @@ public class EnglishHelperProperties {
 
         private int jwtExpirationMs;
 
+        private int jwtRefreshExpirationMs;
+
     }
 
 }

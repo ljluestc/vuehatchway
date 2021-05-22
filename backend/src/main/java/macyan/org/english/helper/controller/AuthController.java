@@ -31,6 +31,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,8 +71,8 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        setRefreshJwtCookie(response, authentication);
-        return  ResponseEntity.ok(createJwtResponse(userDetails, authentication));
+        setRefreshJwtCookie(response, userDetails);
+        return  ResponseEntity.ok(createJwtResponse(userDetails));
     }
 
     @PostMapping("/refresh")
@@ -85,11 +86,8 @@ public class AuthController {
         if (jwtUtils.validateJwtToken(refreshJwt)) {
             String username = jwtUtils.getUserNameFromJwtToken(refreshJwt);
             UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
-            Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword()));
-
-            setRefreshJwtCookie(response, authentication);
-            return ResponseEntity.ok(createJwtResponse(userDetails, authentication));
+            setRefreshJwtCookie(response, userDetails);
+            return ResponseEntity.ok(createJwtResponse(userDetails));
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -126,8 +124,8 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
-    private void setRefreshJwtCookie(HttpServletResponse response, Authentication authentication) {
-        String newRefreshJwt = jwtUtils.generateJwtRefreshToken(authentication);
+    private void setRefreshJwtCookie(HttpServletResponse response, UserDetails userDetails) {
+        String newRefreshJwt = jwtUtils.generateJwtRefreshToken(userDetails);
         Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE_NAME, newRefreshJwt);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
@@ -135,8 +133,8 @@ public class AuthController {
         response.addCookie(cookie);
     }
 
-    private JwtResponse createJwtResponse(UserDetailsImpl userDetails, Authentication authentication) {
-        String jwt = jwtUtils.generateJwtAuthToken(authentication);
+    private JwtResponse createJwtResponse(UserDetailsImpl userDetails) {
+        String jwt = jwtUtils.generateJwtAuthToken(userDetails);
 
         List<String> roles = userDetails.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)

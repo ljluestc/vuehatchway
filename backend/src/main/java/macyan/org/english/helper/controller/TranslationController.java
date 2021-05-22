@@ -35,15 +35,4 @@ public class TranslationController {
     public Collection<Translation> getWords() {
         return new ArrayList<>();
     }
-
-    @GetMapping(path = "/secured")
-    @ResponseBody
-    /**
-     * Test purpose only, delete in the feature
-     */
-    public String getSecured() {
-        log.info("GET successfully called on /secured resource");
-        return "Hi from secure controller";
-    }
-
 }

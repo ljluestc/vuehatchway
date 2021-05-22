@@ -35,30 +35,28 @@ public class JwtUtils {
         this.signingKey = Base64.getEncoder().encode(properties.getSecurity().getJwtSecret().getBytes());
     }
 
-    public String generateJwtAuthToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+    public String generateJwtAuthToken(UserDetails userDetail) {
         Key key = new SecretKeySpec(
             signingKey,
             SignatureAlgorithm.HS512.getJcaName()
         );
 
         return Jwts.builder()
-            .setSubject((userPrincipal.getUsername()))
+            .setSubject((userDetail.getUsername()))
             .setIssuedAt(new Date())
             .setExpiration(new Date((new Date()).getTime() + properties.getSecurity().getJwtExpirationMs()))
             .signWith(key)
             .compact();
     }
 
-    public String generateJwtRefreshToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+    public String generateJwtRefreshToken(UserDetails userDetail) {
         Key key = new SecretKeySpec(
             signingKey,
             SignatureAlgorithm.HS512.getJcaName()
         );
 
         return Jwts.builder()
-            .setSubject((userPrincipal.getUsername()))
+            .setSubject((userDetail.getUsername()))
             .setIssuedAt(new Date())
             .setExpiration(new Date((new Date()).getTime() + properties.getSecurity().getJwtRefreshExpirationMs()))
             .signWith(key)

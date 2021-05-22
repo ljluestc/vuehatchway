@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class JwtResponse {
 
-    private String token;
+    private String accessToken;
 
     private String type = "Bearer";
 
@@ -24,7 +24,7 @@ public class JwtResponse {
     private List<String> roles;
 
     public JwtResponse(String accessToken, String id, String username, String email, List<String> roles) {
-        this.token = accessToken;
+        this.accessToken = accessToken;
         this.id = id;
         this.username = username;
         this.email = email;

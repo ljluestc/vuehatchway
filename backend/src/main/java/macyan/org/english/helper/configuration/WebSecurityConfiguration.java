@@ -62,7 +62,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/api/v1/auth/**").permitAll()
-                .antMatchers("/api/v1/auth/**").permitAll()
                 .antMatchers("/api/v1/test/**").permitAll()
                 .antMatchers("api/v1/translation/**").authenticated()
                 .anyRequest().authenticated();

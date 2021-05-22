@@ -16,5 +16,6 @@ spring:
 english-helper:
   security:
     jwtSecret: english-helper-cool-secret
-    jwtExpirationMs: 300 # 5 min
-    jwtRefreshExpirationMs: 604500 # 1 week
+#    jwtExpirationMs: 300000 # 5 min
+    jwtExpirationMs: 20000 # 5 min
+    jwtRefreshExpirationMs: 604500000 # 1 week

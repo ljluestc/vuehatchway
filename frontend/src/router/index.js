@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Error from '../views/Error'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -28,13 +29,10 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/protected',
-    name: 'Protected',
-    component: () => import('../views/Protected.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  }
+    path: '/error',
+    name: 'Error',
+    component: Error
+  },
 ]
 
 const router = new VueRouter({

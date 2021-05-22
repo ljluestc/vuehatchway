@@ -14,19 +14,20 @@
 </template>
 
 <script>
+import TranslationService from '../services/translations.service';
 
 export default {
   name: 'VocabularySection',
   props: {
     type: String,
-    srcData: String,
+    requestType: String,
     srcCount: String,
   },
   data() {
     return {
       transactions: null,
       total: 82,
-      errors: null,
+      errors: [],
     }
   },
   created() {
@@ -34,13 +35,17 @@ export default {
   },
   methods: {
     getData() {
-      this.$http.get(this.srcData)
+      TranslationService.getByType(this.requestType)
           .then(response => {
-            console.log(response)
-            this.response = response.data
+            console.log('Section got the data');
+            console.log(response);
+            if (response && response.data) {
+              this.response = response.data
+            }
           })
           .catch(e => {
             this.errors.push(e)
+            console.log('error in section');
             console.log(this.errors);
           });
     }

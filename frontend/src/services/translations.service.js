@@ -15,7 +15,7 @@ class TranslationsService {
     }
 
     getByType(type) {
-        return axios.get('/api/v1/translation/' + type, {headers: authHeader()});
+        return axios.get('/api/translation/' + type, {headers: authHeader()});
     }
 }
 

@@ -5,7 +5,7 @@ const USER_LOCAL_STORAGE_KEY = 'user';
 class AuthService {
     login(user) {
         return axios
-            .post('/api/v1/auth/signin', {
+            .post('/api/auth/signin', {
                     username: user.username,
                     password: user.password
                 },
@@ -23,7 +23,7 @@ class AuthService {
     refresh() {
         return new Promise((resolve, reject) => {
             axios
-                .post('/api/v1/auth/refresh', {}, {withCredentials: true})
+                .post('/api/auth/refresh', {}, {withCredentials: true})
                 .then(response => {
                     console.log(response);
                     if (response.data && response.data.accessToken) {
@@ -43,7 +43,7 @@ class AuthService {
     }
 
     register(user) {
-        return axios.post('/api/v1/auth/signup', {
+        return axios.post('/api/auth/signup', {
             username: user.username,
             email: user.email,
             password: user.password
@@ -55,7 +55,7 @@ class AuthService {
     }
 
     getRefreshUrl() {
-        return '/api/v1/auth/refresh'
+        return '/api/auth/refresh'
     }
 }
 

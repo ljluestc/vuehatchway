@@ -6,13 +6,9 @@ import authService from './auth.service.js';
 export default () => {
     axios.interceptors.response.use(
         (response) => {
-            console.log('la-1');
-            console.log(response);
             return response;
         },
         (error) => {
-            console.log('la-error');
-            console.log(error);
             if (error.response.status !== 401) {
                 // todo: add handling for error page
                 return new Promise((resolve, reject) => {

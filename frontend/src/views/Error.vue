@@ -1,5 +1,5 @@
 <template>
-  <div class="error full-screen" @mousemove="move">
+  <div class="error error-screen" @mousemove="move">
     <div class='container'>
       <span class="error-num">5</span>
       <div ref="eye" v-bind:style="rotateStyle" id="eye-left" class="eye"></div>

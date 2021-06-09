@@ -1,9 +1,7 @@
 package macyan.org.english.helper.controller;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
@@ -12,18 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import macyan.org.english.helper.configuration.EnglishHelperProperties;
 import macyan.org.english.helper.controller.request.LoginRequest;
 import macyan.org.english.helper.controller.request.SignupRequest;
 import macyan.org.english.helper.controller.response.JwtResponse;
 import macyan.org.english.helper.controller.response.MessageResponse;
-import macyan.org.english.helper.domain.user.Role;
-import macyan.org.english.helper.domain.user.RoleRepository;
-import macyan.org.english.helper.domain.user.RoleType;
-import macyan.org.english.helper.domain.user.User;
-import macyan.org.english.helper.domain.user.UserRepository;
 import macyan.org.english.helper.security.UserDetailsImpl;
 import macyan.org.english.helper.security.jwt.JwtUtils;
+import macyan.org.english.helper.service.user.Creator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +28,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/auth")
 @AllArgsConstructor
+@Slf4j
 public class AuthController {
 
     private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
@@ -54,15 +49,11 @@ public class AuthController {
 
     private final JwtUtils jwtUtils;
 
-    private final UserRepository userRepository;
-
-    private final PasswordEncoder passwordEncoder;
-
-    private final RoleRepository roleRepository;
-
     private final EnglishHelperProperties properties;
 
     private final UserDetailsService userDetailsService;
+
+    private final Creator userCreator;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
@@ -95,32 +86,16 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        try {
+            userCreator.persistNewUser(signUpRequest);
+        } catch (Exception e) {
+            log.error("Can not create new User: {}", e.getMessage());
             return ResponseEntity
                 .badRequest()
-                .body(new MessageResponse("Error: Username is already taken!"));
+                .body(new MessageResponse("Error: " + e.getMessage()));
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                .badRequest()
-                .body(new MessageResponse("Error: Email is already in use!"));
-        }
-
-        // @todo Move out from controller after writing tests
-        // Create new user's account
-        var userRole = roleRepository.findByName(RoleType.ROLE_USER)
-            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        Set<Role> roles = new HashSet<>();
-        roles.add(userRole);
-        User user = new User(
-            signUpRequest.getUsername(),
-            signUpRequest.getEmail(),
-            passwordEncoder.encode(signUpRequest.getPassword()),
-            roles
-        );
-
-        userRepository.save(user);
+        log.info("Created new user: email " + signUpRequest.getEmail());
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
@@ -149,9 +124,6 @@ public class AuthController {
         );
     }
 
-    /**
-     * todo: move to service.
-     */
     private String getRefreshTokenFromRequest(HttpServletRequest request) {
         var cookies = request.getCookies();
         var jwtOptional = Arrays.stream(cookies).filter(cookie -> REFRESH_TOKEN_COOKIE_NAME.equals(cookie.getName()))

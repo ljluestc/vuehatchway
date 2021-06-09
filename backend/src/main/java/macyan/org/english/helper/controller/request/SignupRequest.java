@@ -1,11 +1,10 @@
 package macyan.org.english.helper.controller.request;
 
-import java.util.Set;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -13,6 +12,7 @@ import lombok.Data;
  * @since 29.04.2021
  */
 @Data
+@Builder
 public class SignupRequest {
 
     @NotBlank
@@ -27,5 +27,4 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 6, max = 100)
     private String password;
-
 }

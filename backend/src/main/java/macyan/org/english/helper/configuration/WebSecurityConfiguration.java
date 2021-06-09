@@ -48,6 +48,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/auth/signup").hasRole("ROLE_ADMIN")
                 .antMatchers("api/translation/**").authenticated()
                 .anyRequest().authenticated();
 

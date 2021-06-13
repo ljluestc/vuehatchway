@@ -2,13 +2,14 @@ package macyan.org.english.helper.domain.user;
 
 import java.util.Set;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.Value;
+import lombok.Singular;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,6 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @Document(collection = "users")
+@Builder()
 public class User {
 
     @Id
@@ -25,24 +27,19 @@ public class User {
 
     @Size(max = 32)
     @NotBlank
+    @Indexed
     String username;
 
     @Size(max = 100)
-    @Email
     @NotBlank
+    @Indexed
     String email;
 
     @NotBlank
     String password;
 
     @DBRef
+    @Singular
     Set<Role> roles;
-
-    public User(String username, String email, String password, Set<Role> roles) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }
 
 }

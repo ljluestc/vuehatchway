@@ -2,6 +2,7 @@ package macyan.org.english.helper.domain.user;
 
 import lombok.Value;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -15,6 +16,7 @@ public class Role {
     @Id
     String id;
 
+    @Indexed
     RoleType name;
 
 }

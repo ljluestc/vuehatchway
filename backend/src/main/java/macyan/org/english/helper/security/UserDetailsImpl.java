@@ -16,11 +16,11 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class UserDetailsImpl implements UserDetails {
 
-    final private String id;
+    private final String id;
 
-    final private String username;
+    private final String username;
 
-    final private String email;
+    private final String email;
 
     @JsonIgnore
     final private String password;

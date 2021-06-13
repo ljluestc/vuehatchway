@@ -1,12 +1,7 @@
 package macyan.org.english.helper.service.user;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import macyan.org.english.helper.controller.request.SignupRequest;
-import macyan.org.english.helper.domain.user.Role;
 import macyan.org.english.helper.domain.user.RoleRepository;
 import macyan.org.english.helper.domain.user.RoleType;
 import macyan.org.english.helper.domain.user.User;
@@ -26,7 +21,7 @@ public class Creator {
 
     private final PasswordEncoder passwordEncoder;
 
-    public void persistNewUser(SignupRequest signUpRequest) throws NotUniqueCredentialsException {
+    public void createNewUser(SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             throw new NotUniqueCredentialsException("User with the same name already exists");
         }
@@ -37,15 +32,13 @@ public class Creator {
 
         var userRole = roleRepository.findByName(RoleType.ROLE_USER)
             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        Set<Role> roles = new HashSet<>();
-        roles.add(userRole);
 
-        User user = new User(
-            signUpRequest.getUsername(),
-            signUpRequest.getEmail(),
-            passwordEncoder.encode(signUpRequest.getPassword()),
-            roles
-        );
+        User user = User.builder()
+            .password( passwordEncoder.encode(signUpRequest.getPassword()))
+            .email(signUpRequest.getEmail())
+            .username(signUpRequest.getUsername())
+            .role(userRole)
+            .build();
         userRepository.save(user);
     }
 

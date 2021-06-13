@@ -87,7 +87,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         try {
-            userCreator.persistNewUser(signUpRequest);
+            userCreator.createNewUser(signUpRequest);
         } catch (Exception e) {
             log.error("Can not create new User: {}", e.getMessage());
             return ResponseEntity

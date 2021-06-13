@@ -1,10 +1,13 @@
 package macyan.org.english.helper.configuration;
 
 import lombok.RequiredArgsConstructor;
+import macyan.org.english.helper.domain.user.RoleRepository;
+import macyan.org.english.helper.domain.user.UserRepository;
 import macyan.org.english.helper.security.jwt.AuthEntryPointJwt;
 import macyan.org.english.helper.security.jwt.AuthTokenFilter;
 import macyan.org.english.helper.security.jwt.JwtUtils;
 import macyan.org.english.helper.security.service.UserDetailsServiceImpl;
+import macyan.org.english.helper.service.user.Creator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +32,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsServiceImpl userDetailsService;
-
     private final EnglishHelperProperties properties;
+
+    final private RoleRepository roleRepository;
+
+    final private UserRepository userRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -47,9 +52,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/static/**").permitAll()
+                .antMatchers("/api/auth/signup").hasRole("ADMIN")
                 .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/auth/signup").hasRole("ROLE_ADMIN")
-                .antMatchers("api/translation/**").authenticated()
+                .antMatchers("/api/translation/**").authenticated()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -62,7 +67,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter(jwtUtils(), userDetailsService);
+        return new AuthTokenFilter(jwtUtils(), userDetailsServiceImpl());
     }
 
     @Bean
@@ -79,6 +84,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public Creator creator() {
+        return new Creator(userRepository, roleRepository, passwordEncoder());
+    }
+
+    @Bean
+    public UserDetailsServiceImpl userDetailsServiceImpl() {
+        return new UserDetailsServiceImpl(userRepository);
     }
 
 }

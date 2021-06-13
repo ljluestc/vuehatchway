@@ -56,7 +56,7 @@ public class CreatorTest {
             .thenReturn(true);
 
         assertThrows(NotUniqueCredentialsException.class, () -> {
-            userCreator.persistNewUser(createRequest());
+            userCreator.createNewUser(createRequest());
         });
     }
 
@@ -66,7 +66,7 @@ public class CreatorTest {
             .thenReturn(true);
 
         assertThrows(NotUniqueCredentialsException.class, () -> {
-            userCreator.persistNewUser(createRequest());
+            userCreator.createNewUser(createRequest());
         });
     }
 
@@ -74,24 +74,31 @@ public class CreatorTest {
     @Test
     public void persistNewUser() {
         var userRole = new Role("testId", RoleType.ROLE_USER);
-        Set<Role> roles = new HashSet<>();
-        roles.add(userRole);
+//        Set<Role> roles = new HashSet<>();
+//        roles.add(userRole);
 
         when(roleRepository.findByName(RoleType.ROLE_USER))
             .thenReturn(Optional.of(userRole));
 
         var hash = "passwordHash";
-        var user = new User(
-            NAME,
-            EMAIL,
-            hash,
-            roles
-        );
+//        var user = new User(
+//            NAME,
+//            EMAIL,
+//            hash,
+//            roles
+//        );
+
+        User user = User.builder()
+            .password(hash)
+            .email(EMAIL)
+            .username(NAME)
+            .role(userRole)
+            .build();
 
         when(passwordEncoder.encode(PASSWORD))
             .thenReturn(hash);
 
-        userCreator.persistNewUser(createRequest());
+        userCreator.createNewUser(createRequest());
 
         ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
         Mockito.verify(userRepository).save(argument.capture());

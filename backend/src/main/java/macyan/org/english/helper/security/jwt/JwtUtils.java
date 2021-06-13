@@ -1,6 +1,7 @@
 package macyan.org.english.helper.security.jwt;
 
 import java.security.Key;
+import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
 
@@ -15,7 +16,6 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import macyan.org.english.helper.configuration.EnglishHelperProperties;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -58,7 +58,7 @@ public class JwtUtils {
         return Jwts.builder()
             .setSubject((userDetail.getUsername()))
             .setIssuedAt(new Date())
-            .setExpiration(new Date((new Date()).getTime() + properties.getSecurity().getJwtRefreshExpirationMs()))
+            .setExpiration(Date.from(Instant.now().plusMillis(properties.getSecurity().getJwtRefreshExpirationMs())))
             .signWith(key)
             .compact();
     }

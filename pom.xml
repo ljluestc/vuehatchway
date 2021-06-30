@@ -15,14 +15,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.4.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <properties>
         <java.version>11</java.version>
         <main.basedir>${project.basedir}</main.basedir>
-
-        <!-- Analysis Tools for CI -->
         <build-plugin.jacoco.version>0.8.6</build-plugin.jacoco.version>
     </properties>
 
@@ -38,17 +36,12 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${build-plugin.jacoco.version}</version>
                 <executions>
-                    <!-- Prepares the property pointing to the JaCoCo
-                    runtime agent which is passed as VM argument when Maven the Surefire plugin
-                    is executed. -->
                     <execution>
                         <id>pre-unit-test</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                    <!-- Ensures that the code coverage report for
-                    unit tests is created after unit tests have been run. -->
                     <execution>
                         <id>post-unit-test</id>
                         <goals>

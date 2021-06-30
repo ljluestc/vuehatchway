@@ -1,0 +1,5 @@
+english-helper:
+  security:
+    jwtSecret: test-test-test-test-test
+    jwtExpirationMs: 3000 # 3 sec
+    jwtRefreshExpirationMs: 5000 # 5 sec

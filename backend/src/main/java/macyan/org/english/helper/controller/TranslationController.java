@@ -3,9 +3,11 @@ package macyan.org.english.helper.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import lombok.extern.slf4j.Slf4j;
 import macyan.org.english.helper.domain.translation.Translation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Yan Matskevich
  * @since 04.04.2021
  */
+@Slf4j
 @RestController
-@RequestMapping("api/v1/translations")
+@RequestMapping("api/translation")
 public class TranslationController {
 
     @GetMapping(value = "/phrases", produces = "application/json")

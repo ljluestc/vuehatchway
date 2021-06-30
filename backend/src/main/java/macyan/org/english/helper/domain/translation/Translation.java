@@ -10,10 +10,14 @@ import lombok.Value;
  * @since 04.04.2021
  */
 @Value(staticConstructor = "of")
-@Builder(toBuilder = true)
 public class Translation {
+
     String id;
+
     String text;
+
     String transcription;
+
     String translation;
+
 }

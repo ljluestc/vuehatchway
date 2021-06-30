@@ -8,10 +8,20 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>english-helper-backand</artifactId>
+    <artifactId>english-helper-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>English Helper Backend</name>
     <description>Vocabulary to learn English</description>
+
+    <properties>
+        <lombok.version>1.18.10</lombok.version>
+        <javax.validation.validation-api.version>2.0.1.Final</javax.validation.validation-api.version>
+        <awaitility.version>4.0.3</awaitility.version>
+        <jaxb-osgi.version>2.2.10</jaxb-osgi.version>
+        <io.jsonwebtoken.jjwt-api.version>0.11.2</io.jsonwebtoken.jjwt-api.version>
+        <io.jsonwebtoken.jjwt-impl.version>0.11.2</io.jsonwebtoken.jjwt-impl.version>
+        <io.jsonwebtoken.jjwt-jackson.version>0.11.2</io.jsonwebtoken.jjwt-jackson.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -22,16 +32,86 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.validation-api.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+        </dependency>
+
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Secure backend API -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-osgi</artifactId>
+            <version>${jaxb-osgi.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${io.jsonwebtoken.jjwt-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${io.jsonwebtoken.jjwt-impl.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${io.jsonwebtoken.jjwt-jackson.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

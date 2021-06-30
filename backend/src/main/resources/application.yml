@@ -1,2 +1,21 @@
 server:
   port : 8088
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: english-helper
+      username: root
+      password: example # TODO: Move it to secrets
+      authentication-database: admin
+      auto-index-creation: true
+
+# App Properties
+# TODO: Move it to secrets
+english-helper:
+  security:
+    jwtSecret: english-helper-cool-secret
+    jwtExpirationMs: 300000 # 5 min
+    jwtRefreshExpirationMs: 604500000 # 1 week

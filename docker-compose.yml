@@ -3,7 +3,7 @@ services:
   web:
     build: .
     ports:
-      - "8088:8088"
+      - 8088:8088
 
   mongo:
     image: mongo:4.2.3

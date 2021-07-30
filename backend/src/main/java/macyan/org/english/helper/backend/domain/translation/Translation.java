@@ -1,6 +1,5 @@
 package macyan.org.english.helper.backend.domain.translation;
 
-import lombok.Builder;
 import lombok.Value;
 
 /**

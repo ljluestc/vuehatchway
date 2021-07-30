@@ -68,7 +68,9 @@
   <!-- See https://checkstyle.org/config_sizes.html -->
   <module name="FileLength"/>
   <module name="LineLength">
+    <property name="max" value="120"/>
     <property name="fileExtensions" value="java"/>
+    <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
   </module>
 
   <!-- Checks for whitespace                               -->
@@ -98,9 +100,9 @@
     <module name="InvalidJavadocPosition"/>
     <module name="JavadocMethod"/>
     <module name="JavadocType"/>
-    <module name="JavadocVariable"/>
+<!--    <module name="JavadocVariable"/>-->
     <module name="JavadocStyle"/>
-    <module name="MissingJavadocMethod"/>
+<!--    <module name="MissingJavadocMethod"/>-->
 
     <!-- Checks for Naming Conventions.                  -->
     <!-- See https://checkstyle.org/config_naming.html -->
@@ -158,10 +160,17 @@
     <!-- See https://checkstyle.org/config_coding.html -->
     <module name="EmptyStatement"/>
     <module name="EqualsHashCode"/>
-    <module name="HiddenField"/>
+    <module name="HiddenField">
+      <property name="ignoreConstructorParameter" value="true"/>
+      <property name="ignoreSetter" value="true"/>
+      <property name="setterCanReturnItsClass" value="true"/>
+      <property name="tokens" value="VARIABLE_DEF, LAMBDA"/>
+    </module>
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
-    <module name="MagicNumber"/>
+    <module name="MagicNumber">
+      <property name="ignoreAnnotation" value="true"/>
+    </module>
     <module name="MissingSwitchDefault"/>
     <module name="MultipleVariableDeclarations"/>
     <module name="SimplifyBooleanExpression"/>
@@ -169,16 +178,15 @@
 
     <!-- Checks for class design                         -->
     <!-- See https://checkstyle.org/config_design.html -->
-    <module name="DesignForExtension"/>
+<!--    <module name="DesignForExtension"/>-->
     <module name="FinalClass"/>
-    <module name="HideUtilityClassConstructor"/>
+<!--    <module name="HideUtilityClassConstructor"/>-->
     <module name="InterfaceIsType"/>
-    <module name="VisibilityModifier"/>
 
     <!-- Miscellaneous other checks.                   -->
     <!-- See https://checkstyle.org/config_misc.html -->
     <module name="ArrayTypeStyle"/>
-    <module name="FinalParameters"/>
+<!--    <module name="FinalParameters"/>-->
     <module name="TodoComment"/>
     <module name="UpperEll"/>
 

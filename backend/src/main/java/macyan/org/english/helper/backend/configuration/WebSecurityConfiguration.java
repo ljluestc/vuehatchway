@@ -34,9 +34,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final EnglishHelperProperties properties;
 
-    final private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    final private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

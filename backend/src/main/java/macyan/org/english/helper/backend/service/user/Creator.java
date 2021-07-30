@@ -34,7 +34,7 @@ public class Creator {
             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 
         User user = User.builder()
-            .password( passwordEncoder.encode(signUpRequest.getPassword()))
+            .password(passwordEncoder.encode(signUpRequest.getPassword()))
             .email(signUpRequest.getEmail())
             .username(signUpRequest.getUsername())
             .role(userRole)

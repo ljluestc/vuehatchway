@@ -26,9 +26,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 public class JwtUtils {
 
-    final private EnglishHelperProperties properties;
+    private final EnglishHelperProperties properties;
 
-    final private byte[] signingKey;
+    private final byte[] signingKey;
 
     public JwtUtils(EnglishHelperProperties properties) {
         this.properties = properties;

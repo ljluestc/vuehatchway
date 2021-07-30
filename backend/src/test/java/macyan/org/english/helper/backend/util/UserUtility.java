@@ -34,7 +34,7 @@ public class UserUtility {
             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 
         User user = User.builder()
-            .password( passwordEncoder.encode(password))
+            .password(passwordEncoder.encode(password))
             .email(email)
             .username(name)
             .role(userRole)

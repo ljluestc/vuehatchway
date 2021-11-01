@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <router-link to="/translation">Translation</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link v-if="!currentUser" to="/login">Login</router-link>
       <a to="" v-if="currentUser" href @click.prevent="logOut">Logout</a>

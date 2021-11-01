@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import Section from '@/components/VocabularySection.vue'
+// import Section from '@/components/VocabularySection.vue'
 
 export default {
   name: 'Home',
   components: {
-    Section
+    // Section
   }
 }
 </script>

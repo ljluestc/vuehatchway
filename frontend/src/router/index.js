@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import Error from '../views/Error'
 import store from '../store'
+import Translation from '../views/NewTranslation'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,14 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/translation',
+    name: 'Translation',
+    component: Translation,
     meta: {
       requiresAuth: true
     }

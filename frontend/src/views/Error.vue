@@ -10,13 +10,13 @@
   </div>
 </template>
 
-<style >
+<style>
 @import '../assets/css/views/Error.css';
 </style>
 
 <script>
 export default {
-  name: 'error',
+  name: 'Error',
   data() {
     return {
       rot: 0,

@@ -39,7 +39,6 @@ public class Translation {
     String text;
 
     @Size(max = 255)
-    @NotBlank
     String transcription;
 
     @Size(max = 255)

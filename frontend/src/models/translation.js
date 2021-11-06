@@ -1,5 +1,5 @@
 export default class Translation {
-    constructor(id, text, transcription, translation, example, tags, type) {
+    constructor(id, text, transcription, translation, type, example, tags) {
         this.id = id;
         this.text = text;
         this.transcription = transcription;

@@ -18,3 +18,8 @@
 #nav a.router-link-exact-active {
     color: #42b983;
 }
+
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}

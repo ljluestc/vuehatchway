@@ -6,10 +6,13 @@ import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import macyan.org.english.helper.backend.domain.translation.Translation;
 import macyan.org.english.helper.backend.domain.translation.Type;
+import macyan.org.english.helper.backend.domain.translation.request.TranslationRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,5 +59,13 @@ public class TranslationController {
     @GetMapping(value = "/words", produces = "application/json")
     public Collection<Translation> getWords() {
         return new ArrayList<>();
+    }
+
+    @RequestMapping(
+        method = { RequestMethod.PUT, RequestMethod.POST },
+        produces = "application/json"
+    )
+    public void handleTranslation(@RequestBody TranslationRequest $request) {
+        var foo = 25;
     }
 }

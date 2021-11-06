@@ -17,6 +17,10 @@ class TranslationsService {
     getByType(type) {
         return axios.get('/api/translation/' + type, {headers: authHeader()});
     }
+
+    createTranslation(translation) {
+        return axios.post('/api/translations', translation,{headers: authHeader()});
+    }
 }
 
 export default new TranslationsService();

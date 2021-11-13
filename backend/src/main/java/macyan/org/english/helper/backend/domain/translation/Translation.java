@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
-import macyan.org.english.helper.backend.domain.user.User;
+import macyan.org.english.helper.backend.domain.user.UserIdentity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -32,38 +32,36 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Translation {
 
     @Id
-    String id;
+    final TranslationIdentity identity;
 
     @Size(max = 255)
     @NotBlank
-    String text;
+    final String text;
 
     @Size(max = 255)
-    String transcription;
+    final String transcription;
 
     @Size(max = 255)
     @NotBlank
-    String translation;
+    final String translation;
 
     @Size(max = 500)
-    @NotBlank
-    String example;
+    final String example;
 
     @DBRef
     @Singular
-    Set<Tag> tags;
-
-    @DBRef
-    @NotBlank
-    User author;
+    final Set<Tag> tags;
 
     @NotBlank
-    Type type;
+    final UserIdentity author;
 
     @NotBlank
-    Date created;
+    final Type type;
 
     @NotBlank
-    Date updated;
+    final Date created;
+
+    @NotBlank
+    final Date updated;
 
 }

@@ -3,10 +3,16 @@ package macyan.org.english.helper.backend.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import macyan.org.english.helper.backend.domain.translation.Translation;
+import macyan.org.english.helper.backend.domain.translation.TranslationManager;
+import macyan.org.english.helper.backend.domain.translation.TranslationRepository;
 import macyan.org.english.helper.backend.domain.translation.Type;
 import macyan.org.english.helper.backend.domain.translation.request.TranslationRequest;
+import macyan.org.english.helper.backend.domain.user.UserIdentity;
+import macyan.org.english.helper.backend.security.UserDetailsImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("api/translations")
+@AllArgsConstructor
 public class TranslationController {
+
+    private final TranslationRepository translationRepository;
+
+    private final TranslationManager translationManager;
 
     // оидн контроллер с гет параметро на тип. Перемапливать userDetails из контекста и делать запрос в репозиторий
     // добавить проверку на валидность переданного типа
@@ -62,10 +73,13 @@ public class TranslationController {
     }
 
     @RequestMapping(
-        method = { RequestMethod.PUT, RequestMethod.POST },
+        method = {RequestMethod.PUT, RequestMethod.POST},
         produces = "application/json"
     )
-    public void handleTranslation(@RequestBody TranslationRequest $request) {
-        var foo = 25;
+    public ResponseEntity<?> handleTranslation(@RequestBody TranslationRequest request) {
+        var userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        translationManager.handleTranslationRequest(request, UserIdentity.builder().id(userDetails.getId()).build());
+        return ResponseEntity.ok().build();
     }
+
 }

@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import lombok.SneakyThrows;
 import macyan.org.english.helper.backend.controller.request.SignupRequest;
+import macyan.org.english.helper.backend.domain.user.Creator;
+import macyan.org.english.helper.backend.domain.user.NotUniqueCredentialsException;
 import macyan.org.english.helper.backend.domain.user.Role;
 import macyan.org.english.helper.backend.domain.user.RoleRepository;
 import macyan.org.english.helper.backend.domain.user.RoleType;

@@ -1,4 +1,4 @@
-package macyan.org.english.helper.backend.service.user;
+package macyan.org.english.helper.backend.domain.user;
 
 /**
  * @author Yan Matskevich

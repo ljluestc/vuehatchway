@@ -56,7 +56,7 @@
 <script>
 import multiselect from 'vue-multiselect';
 import translationService from '../services/translations.service';
-import transaltion from '../models/translation';
+import translationDTO from '../models/translation';
 
 export default {
   name: 'translation',
@@ -110,7 +110,7 @@ export default {
         return;
       }
 
-      let translation = new transaltion(
+      let translation = new translationDTO(
           this.id,
           this.text,
           this.transcription,
@@ -122,7 +122,15 @@ export default {
 
       // TODO Need to write handling for translation already exist case
       if (!this.id) {
-        translationService.createTranslation(translation);
+        translationService.createTranslation(translation)
+            .then(
+                () => this.$router.push({name: 'Home'}),
+            )
+            .catch(error => {
+              console.log("Could not create Translation");
+              console.log(error.response);
+            }
+        )
       }
     },
     getData() {

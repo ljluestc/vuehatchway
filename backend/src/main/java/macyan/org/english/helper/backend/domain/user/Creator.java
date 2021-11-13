@@ -1,11 +1,9 @@
-package macyan.org.english.helper.backend.service.user;
+package macyan.org.english.helper.backend.domain.user;
+
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
-import macyan.org.english.helper.backend.domain.user.RoleRepository;
-import macyan.org.english.helper.backend.domain.user.RoleType;
-import macyan.org.english.helper.backend.domain.user.User;
 import macyan.org.english.helper.backend.controller.request.SignupRequest;
-import macyan.org.english.helper.backend.domain.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -34,9 +32,36 @@ public class Creator {
             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 
         User user = User.builder()
+            .identity(
+                UserIdentity.builder()
+                    .id(UUID.randomUUID().toString())
+                    .build()
+            )
             .password(passwordEncoder.encode(signUpRequest.getPassword()))
             .email(signUpRequest.getEmail())
             .username(signUpRequest.getUsername())
+            .role(userRole)
+            .build();
+        userRepository.save(user);
+    }
+
+    /**
+     * TODO: to be removed
+     */
+    public void createAdminUser() {
+
+        var userRole = roleRepository.findByName(RoleType.ROLE_ADMIN)
+            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+
+        User user = User.builder()
+            .identity(
+                UserIdentity.builder()
+                    .id(UUID.randomUUID().toString())
+                    .build()
+            )
+            .password(passwordEncoder.encode("12345"))
+            .email("test@test.com")
+            .username("test")
             .role(userRole)
             .build();
         userRepository.save(user);

@@ -23,7 +23,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
 
     @Id
-    String id;
+    UserIdentity identity;
 
     @Size(max = 32)
     @NotBlank

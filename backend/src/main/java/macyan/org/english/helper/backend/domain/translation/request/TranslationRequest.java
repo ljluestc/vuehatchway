@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import macyan.org.english.helper.backend.domain.translation.Type;
-import org.springframework.data.annotation.Id;
+import org.springframework.lang.Nullable;
 
 /**
  * @author Yan Matskevich
@@ -18,7 +18,8 @@ import org.springframework.data.annotation.Id;
 @Builder
 @RequiredArgsConstructor(staticName = "of")
 public class TranslationRequest {
-    @Id
+
+    @Nullable
     String id;
 
     @Size(max = 255)
@@ -26,6 +27,7 @@ public class TranslationRequest {
     String text;
 
     @Size(max = 255)
+    @Nullable
     String transcription;
 
     @Size(max = 255)

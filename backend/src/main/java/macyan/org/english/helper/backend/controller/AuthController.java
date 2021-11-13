@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import macyan.org.english.helper.backend.security.UserDetailsImpl;
 import macyan.org.english.helper.backend.security.jwt.JwtUtils;
-import macyan.org.english.helper.backend.service.user.Creator;
+import macyan.org.english.helper.backend.domain.user.Creator;
 import macyan.org.english.helper.backend.configuration.EnglishHelperProperties;
 import macyan.org.english.helper.backend.controller.request.LoginRequest;
 import macyan.org.english.helper.backend.controller.request.SignupRequest;
@@ -60,6 +60,8 @@ public class AuthController {
         @Valid @RequestBody LoginRequest loginRequest,
         HttpServletResponse response
     ) {
+        // TODO: remove
+//        userCreator.createAdminUser();
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

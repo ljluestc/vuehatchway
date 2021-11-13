@@ -7,7 +7,7 @@ import macyan.org.english.helper.backend.security.jwt.AuthEntryPointJwt;
 import macyan.org.english.helper.backend.security.jwt.AuthTokenFilter;
 import macyan.org.english.helper.backend.security.jwt.JwtUtils;
 import macyan.org.english.helper.backend.security.service.UserDetailsServiceImpl;
-import macyan.org.english.helper.backend.service.user.Creator;
+import macyan.org.english.helper.backend.domain.user.Creator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

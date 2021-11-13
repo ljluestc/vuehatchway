@@ -12,8 +12,8 @@ export default () => {
             if (error.response.status !== 401) {
                 // todo: add handling for error page
                 return new Promise((resolve, reject) => {
-                    router.push({name: 'Error'})
                     reject(error);
+                    router.push({name: 'Error'})
                 });
             }
 

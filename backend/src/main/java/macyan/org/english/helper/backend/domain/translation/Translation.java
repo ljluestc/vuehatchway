@@ -1,6 +1,10 @@
 package macyan.org.english.helper.backend.domain.translation;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 /**
  * User translation representation.
@@ -8,15 +12,27 @@ import lombok.Value;
  * @author Yan Matskevich
  * @since 04.04.2021
  */
-@Value(staticConstructor = "of")
+@Entity
+@Table(name = "translations")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Translation {
 
-    String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String text;
+    @Column(nullable = false)
+    private String text;
 
-    String transcription;
+    @Column(nullable = false)
+    private String transcription;
 
-    String translation;
-
+    @Column(nullable = false)
+    private String translation;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Type type;
 }

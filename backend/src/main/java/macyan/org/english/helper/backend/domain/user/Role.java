@@ -1,22 +1,28 @@
 package macyan.org.english.helper.backend.domain.user;
 
-import lombok.Value;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 /**
  * @author Yan Matskevich
  * @since 26.04.2021
  */
-@Document(collection = "roles")
-@Value
+@Entity
+@Table(name = "roles")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
 
     @Id
-    String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Indexed
-    RoleType name;
+    @Enumerated(EnumType.STRING)
+    @Column(unique = true)
+    private RoleType name;
 
 }

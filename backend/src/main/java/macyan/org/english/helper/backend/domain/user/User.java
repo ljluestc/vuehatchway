@@ -2,44 +2,48 @@ package macyan.org.english.helper.backend.domain.user;
 
 import java.util.Set;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Singular;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Yan Matskevich
  * @since 26.04.2021
  */
+@Entity
+@Table(name = "users")
 @Data
-@Document(collection = "users")
-@Builder()
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
-    String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Size(max = 32)
     @NotBlank
-    @Indexed
-    String username;
+    @Column(unique = true)
+    private String username;
 
     @Size(max = 100)
     @NotBlank
-    @Indexed
-    String email;
+    @Column(unique = true)
+    private String email;
 
     @NotBlank
-    String password;
+    private String password;
 
-    @DBRef
-    @Singular
-    Set<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles", 
+               joinColumns = @JoinColumn(name = "user_id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
 }

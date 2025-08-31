@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class UserDetailsImpl implements UserDetails {
 
-    private final String id;
+    private final Long id;
 
     private final String username;
 
@@ -33,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public UserDetailsImpl(
-        String id,
+        Long id,
         String username,
         String email,
         String password,
@@ -60,7 +60,7 @@ public class UserDetailsImpl implements UserDetails {
         );
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

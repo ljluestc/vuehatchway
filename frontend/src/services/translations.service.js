@@ -1,21 +1,24 @@
 import axios from 'axios';
-import authHeader from './auth-header';
 
 class TranslationsService {
     getPhrases() {
-        return axios.get("phrases", {headers: authHeader()});
+        return axios.get("/api/translation/phrases");
     }
 
     getPhrasalVerbs() {
-        return axios.get("phrasal-verbs", {headers: authHeader()});
+        return axios.get("/api/translation/phrasal-verbs");
     }
 
     getWords() {
-        return axios.get("words", {headers: authHeader()});
+        return axios.get("/api/translation/words");
     }
 
     getByType(type) {
-        return axios.get('/api/translation/' + type, {headers: authHeader()});
+        return axios.get('/api/translation/' + type);
+    }
+
+    getAllTranslations() {
+        return axios.get('/api/translation/all');
     }
 }
 

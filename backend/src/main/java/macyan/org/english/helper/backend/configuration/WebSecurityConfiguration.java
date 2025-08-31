@@ -27,16 +27,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 @EnableConfigurationProperties(EnglishHelperProperties.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final EnglishHelperProperties properties;
-
     private final RoleRepository roleRepository;
-
     private final UserRepository userRepository;
+
+    public WebSecurityConfiguration(EnglishHelperProperties properties, RoleRepository roleRepository, UserRepository userRepository) {
+        this.properties = properties;
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -52,10 +55,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/static/**").permitAll()
-                .antMatchers("/api/auth/signup").hasRole("ADMIN")
+                .antMatchers("/api/auth/signup").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/translation/**").authenticated()
-                .anyRequest().authenticated();
+                .antMatchers("/api/translation/**").permitAll()
+                .anyRequest().permitAll();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

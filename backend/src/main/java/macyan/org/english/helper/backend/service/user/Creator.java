@@ -8,18 +8,23 @@ import macyan.org.english.helper.backend.controller.request.SignupRequest;
 import macyan.org.english.helper.backend.domain.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Set;
+
 /**
  * @author Yan Matskevich
  * @since 09.06.2021
  */
-@AllArgsConstructor
 public class Creator {
 
     private final UserRepository userRepository;
-
     private final RoleRepository roleRepository;
-
     private final PasswordEncoder passwordEncoder;
+
+    public Creator(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public void createNewUser(SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -37,7 +42,7 @@ public class Creator {
             .password(passwordEncoder.encode(signUpRequest.getPassword()))
             .email(signUpRequest.getEmail())
             .username(signUpRequest.getUsername())
-            .role(userRole)
+            .roles(Set.of(userRole))
             .build();
         userRepository.save(user);
     }

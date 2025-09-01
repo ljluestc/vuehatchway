@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,6 +26,10 @@ import org.springframework.test.context.junit4.SpringRunner;
     classes = EnglishHelperApplication.class
 )
 @ContextConfiguration(initializers = RandomPortInitializer.class)
+@TestPropertySource(properties = {
+    "spring.jpa.hibernate.ddl-auto=create-drop",
+    "spring.jpa.show-sql=true"
+})
 public abstract class EnglishHelperApplicationFunctionalTest {
 
     protected static final String ADMIN_NAME = "admin";
@@ -48,8 +52,7 @@ public abstract class EnglishHelperApplicationFunctionalTest {
     @Autowired
     protected EnglishHelperProperties properties;
 
-    @Autowired
-    protected MongoTemplate template;
+    // Using JPA repositories instead of MongoDB template
 
     @LocalServerPort
     protected int serverPort;
@@ -81,8 +84,8 @@ public abstract class EnglishHelperApplicationFunctionalTest {
 
     @After
     public void tearDown() {
-        template.dropCollection(User.class);
-        template.dropCollection(Role.class);
+        userRepository.deleteAll();
+        roleRepository.deleteAll();
     }
 
 }

@@ -1,6 +1,7 @@
 package macyan.org.english.helper.backend.service.user;
 
 import java.util.Optional;
+import java.util.Set;
 
 import lombok.SneakyThrows;
 import macyan.org.english.helper.backend.controller.request.SignupRequest;
@@ -71,7 +72,7 @@ public class CreatorTest {
     @SneakyThrows
     @Test
     public void persistNewUser() {
-        var userRole = new Role("testId", RoleType.ROLE_USER);
+        var userRole = new Role(1L, RoleType.ROLE_USER);
 
         when(roleRepository.findByName(RoleType.ROLE_USER))
             .thenReturn(Optional.of(userRole));
@@ -82,7 +83,7 @@ public class CreatorTest {
             .password(hash)
             .email(EMAIL)
             .username(NAME)
-            .role(userRole)
+            .roles(Set.of(userRole))
             .build();
 
         when(passwordEncoder.encode(PASSWORD))
